@@ -9,7 +9,7 @@ public class MainController {
     @GetMapping("/")
     public String getMainPage(){
 
-        return "Merhaba From Heroku Tring";
+        return "Merhaba BASAK hacklendin";
 
     }
 }
