@@ -3,15 +3,17 @@ package com.example.herokuappdemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class MainController {
     @Autowired
     EntityDAO entityDAO;
-    @GetMapping("/")
+    @GetMapping("/getdata")
+    @ResponseBody
     public String getMainPage(){
         ClassEntity entity=new ClassEntity("AKIN","REIS",true);
 
@@ -21,4 +23,11 @@ public class MainController {
         return listEveryone.toString();
 
     }
+
+    @GetMapping("/")
+    public String getIndex(){
+
+        return "index";
+    }
+
 }
