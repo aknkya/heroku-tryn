@@ -12,7 +12,7 @@ import java.util.List;
 public class MainController {
     @Autowired
     EntityDAO entityDAO;
-    @GetMapping("/getdata")
+    @GetMapping("/")
     @ResponseBody
     public String getMainPage(){
         ClassEntity entity=new ClassEntity("AKIN","REIS",true);
@@ -24,10 +24,15 @@ public class MainController {
 
     }
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String getIndex(){
 
         return "index";
+    }
+    @GetMapping("/getquery")
+    public String homePage(){
+
+        return "akinjquery";
     }
 
 }
