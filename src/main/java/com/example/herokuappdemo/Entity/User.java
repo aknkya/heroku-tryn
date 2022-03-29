@@ -28,10 +28,11 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String password, String role) {
+    public User(String userName, String password, String role, boolean isActive) {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.isActive = isActive;
     }
 
     public long getUserId() {

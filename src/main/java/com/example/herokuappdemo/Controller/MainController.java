@@ -3,7 +3,9 @@ package com.example.herokuappdemo.Controller;
 import com.example.herokuappdemo.DAO.EntityDAO;
 import com.example.herokuappdemo.DAO.UserDAO;
 import com.example.herokuappdemo.Entity.ClassEntity;
+import com.example.herokuappdemo.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,8 @@ public class MainController {
     EntityDAO entityDAO;
     @Autowired
     UserDAO userDAO;
+ /*  @Autowired
+    PasswordEncoder passwordEncoder;*/
     @GetMapping("/xxx")
     @ResponseBody
     public String getMainPage(){
@@ -54,8 +58,13 @@ public class MainController {
     public String registerPost(@RequestParam(value = "username",required = false) String username,
                                @RequestParam(value = "password" ,required = false)String password){
 
-        System.out.println(username+"  "+password);
-    return "deneme";
+
+
+
+        User user =new User(username,password,"user",true);
+
+        System.out.println(username+"  "+password+"  ");
+    return "landingpage";
 }
 
 }
