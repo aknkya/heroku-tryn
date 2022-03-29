@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Page Title</title>
 </head>
 <body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+<form method="post" th:action="@{/registernow}">
+    <div class="inputBox"> <input type="text" name="username" placeholder="Username" id="username"> </div>
+    <div class="inputBox"> <input type="password" name="password" placeholder="Password" id="password" minlength="8" required> </div>
+    <div class="inputBox"> <input type="password" name="Re-password" placeholder="Re-password" id="pass" minlength="8" required> </div>
+    <input type="submit" name="Signup" value="Sign-up">
+</form>
+
 
 </body>
 </html>
