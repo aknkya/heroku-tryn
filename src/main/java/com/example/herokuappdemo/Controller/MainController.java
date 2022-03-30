@@ -70,10 +70,9 @@ public class MainController {
         String enCodedPassowrd=bCryptPasswordEncoder.encode(password);
 
         User user =new User(username,enCodedPassowrd,"user",true);
-         userDAO.save(user);
-       User isUsernameExist=userDAO.findByUserName(user.getUserName());
-           System.out.println(isUsernameExist.getUserName());
-        System.out.println(username+"  "+password+"  "+enCodedPassowrd);
+        userDAO.save(user);
+
+
     return "index";
 }
 
