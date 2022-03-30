@@ -5,6 +5,7 @@ import com.example.herokuappdemo.DAO.UserDAO;
 import com.example.herokuappdemo.Entity.ClassEntity;
 import com.example.herokuappdemo.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,7 @@ public class MainController {
     EntityDAO entityDAO;
     @Autowired
     UserDAO userDAO;
- /*  @Autowired
-    PasswordEncoder passwordEncoder;*/
+
     @GetMapping("/xxx")
     @ResponseBody
     public String getMainPage(){
@@ -59,12 +59,15 @@ public class MainController {
                                @RequestParam(value = "password" ,required = false)String password){
 
 
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        String enCodedPassowrd=bCryptPasswordEncoder.encode(password);
 
+        User user =new User(username,enCodedPassowrd,"user",true);
+        userDAO.save(user);
+        
 
-        User user =new User(username,password,"user",true);
-
-        System.out.println(username+"  "+password+"  ");
-    return "landingpage";
+        System.out.println(username+"  "+password+"  "+enCodedPassowrd);
+    return "index";
 }
 
 }
