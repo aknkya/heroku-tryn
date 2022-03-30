@@ -39,6 +39,13 @@ public class MainController {
 
         return "index";
     }
+
+    @GetMapping("/")
+    public String getMainPages(){
+
+        return "landingpage";
+    }
+
     @GetMapping("/getquery")
     public String homePage(){
 
@@ -63,9 +70,9 @@ public class MainController {
         String enCodedPassowrd=bCryptPasswordEncoder.encode(password);
 
         User user =new User(username,enCodedPassowrd,"user",true);
-        userDAO.save(user);
-        
-
+         userDAO.save(user);
+       User isUsernameExist=userDAO.findByUserName(user.getUserName());
+           System.out.println(isUsernameExist.getUserName());
         System.out.println(username+"  "+password+"  "+enCodedPassowrd);
     return "index";
 }

@@ -12,7 +12,7 @@ public class User {
    private String userName;
    @Column(name ="password")
    private String password;
-   @Column(name="role",unique = true)
+   @Column(name="role")
    private String role;
    @Column(name = "isActive")
    private boolean isActive;

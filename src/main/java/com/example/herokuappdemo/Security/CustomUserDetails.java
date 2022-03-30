@@ -1,16 +1,19 @@
 package com.example.herokuappdemo.Security;
 
+import com.example.herokuappdemo.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-public class UserDetail implements UserDetails {
-    private String userName;
-    private String password;
-    private boolean isActive;
+public class CustomUserDetails implements UserDetails {
+    private User user;
     private List<GrantedAuthority> authorities;
+
+    public CustomUserDetails(User user) {
+        this.user = user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -19,12 +22,12 @@ public class UserDetail implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return user.getUserName();
     }
 
     @Override
@@ -44,6 +47,6 @@ public class UserDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return user.isActive();
     }
 }
