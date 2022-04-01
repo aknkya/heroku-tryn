@@ -76,12 +76,12 @@ public class MainController {
          userDAO.save(user);
 
          if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
-               mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
+             mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
               List<User> userList= userDAO.findAll();
               mailSender.sendMail("akn_kya@hotmail.com","uye listesi",userList.toString());
-             mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
 
-               System.out.println("kayıt oldu  " +userDAO.findByUserName(username).getUserName());
+
+
          }
 
 
