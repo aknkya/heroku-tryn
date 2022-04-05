@@ -5,14 +5,19 @@ import com.example.herokuappdemo.DAO.UserDAO;
 import com.example.herokuappdemo.Entity.ClassEntity;
 import com.example.herokuappdemo.Entity.User;
 import com.example.herokuappdemo.Service.MailSenderService;
+import com.example.herokuappdemo.Service.QRGeneratorService;
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -75,10 +80,13 @@ public class MainController {
         User user =new User(username,enCodedPassowrd,"user",true);
          userDAO.save(user);
 
-         if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
-             mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
+          if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
+
+
+              mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
               List<User> userList= userDAO.findAll();
               mailSender.sendMail("akn_kya@hotmail.com","uye listesi",userList.toString());
+              System.out.println(userList.toString());
 
 
 
@@ -86,6 +94,26 @@ public class MainController {
 
 
     return "index";
+}
+@GetMapping("/qr")
+public String getQRCode(Model model){
+
+    byte[] image = new byte[0];
+    try {
+
+        // Generate and Return Qr Code in Byte Array
+        image = QRGeneratorService.getQRCodeImage("https://www.facebook.com/",250,250);
+
+        // Generate and Save Qr Code Image in static/image folder
+
+
+    } catch (WriterException | IOException e) {
+        e.printStackTrace();
+    }
+    String qrcode = Base64.getEncoder().encodeToString(image);
+
+    model.addAttribute("qrcode",qrcode);
+        return "qrcode";
 }
 
 }
