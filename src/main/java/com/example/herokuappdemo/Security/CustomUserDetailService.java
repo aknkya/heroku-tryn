@@ -18,6 +18,7 @@ public class CustomUserDetailService implements UserDetailsService {
         User user = userDAO.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
+
         }
         return new CustomUserDetails(user);
     }

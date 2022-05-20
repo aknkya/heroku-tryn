@@ -1,8 +1,8 @@
 package com.example.herokuappdemo.Controller;
 
-import com.example.herokuappdemo.DAO.EntityDAO;
+import com.example.herokuappdemo.DAO.ProductEntityDAO;
 import com.example.herokuappdemo.DAO.UserDAO;
-import com.example.herokuappdemo.Entity.ClassEntity;
+import com.example.herokuappdemo.Entity.ProductEntity;
 import com.example.herokuappdemo.Entity.User;
 import com.example.herokuappdemo.Service.MailSenderService;
 import com.example.herokuappdemo.Service.QRGeneratorService;
@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 
 @Controller
-
 public class MainController {
     @Autowired
-    EntityDAO entityDAO;
+    ProductEntityDAO productEntityDAO;
     @Autowired
     UserDAO userDAO;
     @Autowired
@@ -33,11 +33,11 @@ public class MainController {
     @GetMapping("/xxx")
     @ResponseBody
     public String getMainPage(){
-        ClassEntity entity=new ClassEntity("AKIN","REIS",true);
 
-        entityDAO.save(entity);
+
+
         System.out.println("Yazdı");
-        List<ClassEntity> listEveryone =entityDAO.findAll();
+        List<ProductEntity> listEveryone = productEntityDAO.findAll();
         return listEveryone.toString();
 
     }
@@ -50,7 +50,12 @@ public class MainController {
 
     @GetMapping("/")
     public String getMainPages(){
+        final String uri = "https://api3.binance.com/api/v3/time";
 
+        RestTemplate restTemplate = new RestTemplate();
+        String result = restTemplate.getForObject(uri, String.class);
+
+        System.out.println(result);
         return "landingpage";
     }
 
@@ -89,7 +94,6 @@ public class MainController {
               System.out.println(userList.toString());
 
 
-
          }
 
 
@@ -114,6 +118,13 @@ public String getQRCode(Model model){
 
     model.addAttribute("qrcode",qrcode);
         return "qrcode";
+}
+
+@GetMapping("/oyun")
+    public String getOyun() {
+
+        return "oyun";
+
 }
 
 }
