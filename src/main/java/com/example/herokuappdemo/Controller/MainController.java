@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class MainController {
@@ -125,6 +128,21 @@ public String getQRCode(Model model){
 
         return "oyun";
 
+}
+
+@GetMapping("/d3")
+    public String getd3(Model model){
+
+        ArrayList<Integer> arrayList=new ArrayList<Integer>();
+
+        for(int i=0;i<100;i++){
+            int randomNum = ThreadLocalRandom.current().nextInt(1, 500 + 1);
+            arrayList.add(randomNum);
+        }
+
+          model.addAttribute("datalar",arrayList);
+
+        return "d3";
 }
 
 }
