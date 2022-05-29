@@ -145,4 +145,12 @@ public String getQRCode(Model model){
         return "d3";
 }
 
+
+    @GetMapping("/getusers")
+    public String getUserPage(Model model){
+       List<User> users= userDAO.findAll();
+       model.addAttribute("users",users);
+        return "userlist";
+    }
+
 }
