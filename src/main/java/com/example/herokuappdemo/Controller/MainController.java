@@ -88,7 +88,7 @@ public class MainController {
         User user =new User(username,enCodedPassowrd,"user",true);
          userDAO.save(user);
 
-          if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
+        /*  if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
 
 
               mailSender.sendMail("akn_kya@hotmail.com","Yeni üye kaydı",username+"  Isımlı Uye Sısteme Kayıt Olmustur Sıfresı: "+ password);
@@ -96,8 +96,8 @@ public class MainController {
               mailSender.sendMail("akn_kya@hotmail.com","uye listesi",userList.toString());
               System.out.println(userList.toString());
 
-
-         }
+              return "index";
+         }*/
 
 
     return "index";
