@@ -1,4 +1,4 @@
-package com.example.herokuappdemo.Entity;
+package com.example.herokuappdemo.entity;
 
 import javax.persistence.*;
 

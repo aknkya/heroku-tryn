@@ -1,11 +1,12 @@
-package com.example.herokuappdemo.Controller;
+package com.example.herokuappdemo.controller;
 
 import com.example.herokuappdemo.DAO.ProductEntityDAO;
 import com.example.herokuappdemo.DAO.UserDAO;
-import com.example.herokuappdemo.Entity.ProductEntity;
-import com.example.herokuappdemo.Entity.User;
-import com.example.herokuappdemo.Service.MailSenderService;
-import com.example.herokuappdemo.Service.QRGeneratorService;
+import com.example.herokuappdemo.entity.ProductEntity;
+import com.example.herokuappdemo.entity.User;
+import com.example.herokuappdemo.service.MailSenderService;
+import com.example.herokuappdemo.service.MovieRequestService;
+import com.example.herokuappdemo.service.QRGeneratorService;
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -31,12 +32,13 @@ public class MainController {
     @Autowired
     UserDAO userDAO;
     @Autowired
-   private MailSenderService mailSender;
+    MovieRequestService movieRequestService;
+    @Autowired
+    private MailSenderService mailSender;
 
     @GetMapping("/xxx")
     @ResponseBody
-    public String getMainPage(){
-
+    public String getMainPage() {
 
 
         System.out.println("Yazdı");
@@ -46,13 +48,13 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String getIndex(){
+    public String getIndex() {
 
         return "index";
     }
 
     @GetMapping("/")
-    public String getMainPages(){
+    public String getMainPages() {
         final String uri = "https://api3.binance.com/api/v3/time";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -63,31 +65,30 @@ public class MainController {
     }
 
     @GetMapping("/getquery")
-    public String homePage(){
+    public String homePage() {
 
         return "akinjquery";
     }
 
     @GetMapping("/register")
-    public String registerPage(){
+    public String registerPage() {
 
 
         return "registerpage";
     }
 
 
-
     @PostMapping("/registernow")
-    public String registerPost(@RequestParam(value = "username",required = false) String username,
-                               @RequestParam(value = "password" ,required = false)String password){
+    public String registerPost(@RequestParam(value = "username", required = false) String username,
+                               @RequestParam(value = "password", required = false) String password) {
 
 
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-        String enCodedPassowrd=bCryptPasswordEncoder.encode(password);
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String enCodedPassowrd = bCryptPasswordEncoder.encode(password);
 
-        User user =new User(username,enCodedPassowrd,"user",true);
-         userDAO.save(user);
-
+        User user = new User(username, enCodedPassowrd, "user", true);
+        userDAO.save(user);
+        User user32 = userDAO.findByUserName("aknkya");
         /*  if(userDAO.findByUserName(username) !=null && !userDAO.findByUserName(username).getUserName().isEmpty()){
 
 
@@ -100,56 +101,59 @@ public class MainController {
          }*/
 
 
-    return "index";
-}
-@GetMapping("/qr")
-public String getQRCode(Model model){
-
-    byte[] image = new byte[0];
-    try {
-
-        // Generate and Return Qr Code in Byte Array
-        image = QRGeneratorService.getQRCodeImage("https://www.facebook.com/",250,250);
-
-        // Generate and Save Qr Code Image in static/image folder
-
-
-    } catch (WriterException | IOException e) {
-        e.printStackTrace();
+        return "index";
     }
-    String qrcode = Base64.getEncoder().encodeToString(image);
 
-    model.addAttribute("qrcode",qrcode);
+    @GetMapping("/qr")
+    public String getQRCode(Model model) {
+
+        byte[] image = new byte[0];
+        try {
+
+            // Generate and Return Qr Code in Byte Array
+            image = QRGeneratorService.getQRCodeImage("https://www.facebook.com/", 250, 250);
+
+            // Generate and Save Qr Code Image in static/image folder
+
+
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+        }
+        String qrcode = Base64.getEncoder().encodeToString(image);
+
+        model.addAttribute("qrcode", qrcode);
         return "qrcode";
-}
+    }
 
-@GetMapping("/oyun")
+    @GetMapping("/oyun")
     public String getOyun() {
 
         return "oyun";
 
-}
+    }
 
-@GetMapping("/d3")
-    public String getd3(Model model){
+    @GetMapping("/d3")
+    public String getd3(Model model) throws URISyntaxException {
 
-        ArrayList<Integer> arrayList=new ArrayList<Integer>();
 
-        for(int i=0;i<100;i++){
+        movieRequestService.getList();
+        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+
+        for (int i = 0; i < 100; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(1, 500 + 1);
             arrayList.add(randomNum);
         }
 
-          model.addAttribute("datalar",arrayList);
+        model.addAttribute("datalar", arrayList);
 
         return "d3";
-}
+    }
 
 
     @GetMapping("/getusers")
-    public String getUserPage(Model model){
-       List<User> users= userDAO.findAll();
-       model.addAttribute("users",users);
+    public String getUserPage(Model model) {
+        List<User> users = userDAO.findAll();
+        model.addAttribute("users", users);
         return "userlist";
     }
 

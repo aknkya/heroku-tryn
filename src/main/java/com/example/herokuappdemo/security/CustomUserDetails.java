@@ -1,6 +1,6 @@
-package com.example.herokuappdemo.Security;
+package com.example.herokuappdemo.security;
 
-import com.example.herokuappdemo.Entity.User;
+import com.example.herokuappdemo.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

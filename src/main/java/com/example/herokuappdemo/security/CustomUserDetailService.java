@@ -1,7 +1,7 @@
-package com.example.herokuappdemo.Security;
+package com.example.herokuappdemo.security;
 
 import com.example.herokuappdemo.DAO.UserDAO;
-import com.example.herokuappdemo.Entity.User;
+import com.example.herokuappdemo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

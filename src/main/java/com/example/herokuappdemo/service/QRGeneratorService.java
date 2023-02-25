@@ -1,4 +1,4 @@
-package com.example.herokuappdemo.Service;
+package com.example.herokuappdemo.service;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
